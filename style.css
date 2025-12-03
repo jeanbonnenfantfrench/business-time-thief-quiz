@@ -960,7 +960,17 @@ body::after {
     flex-shrink: 0;
 }
 
-.btn-share:hover .share-icon {
+.share-icon-img {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.btn-share:hover .share-icon,
+.btn-share:hover .share-icon-img {
     transform: scale(1.15) rotate(5deg);
 }
 
@@ -1007,21 +1017,11 @@ body::after {
     box-shadow: 0 4px 16px rgba(0, 120, 212, 0.35);
 }
 
-.btn-email .share-icon {
-    fill: var(--white);
-}
-
-.btn-email .share-icon rect,
-.btn-email .share-icon path,
-.btn-email .share-icon circle {
-    fill: inherit;
-}
-
 .btn-email:hover {
-    background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+    background: linear-gradient(135deg, #106ebe 0%, #005a9e 100%);
     color: var(--white);
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(73, 80, 87, 0.45);
+    box-shadow: 0 8px 24px rgba(0, 120, 212, 0.45);
 }
 
 .btn-teams {
@@ -1029,16 +1029,6 @@ body::after {
     color: var(--white);
     border: none;
     box-shadow: 0 4px 16px rgba(98, 100, 167, 0.35);
-}
-
-.btn-teams .share-icon {
-    fill: var(--white);
-}
-
-.btn-teams .share-icon rect,
-.btn-teams .share-icon path,
-.btn-teams .share-icon circle {
-    fill: inherit;
 }
 
 .btn-teams:hover {
