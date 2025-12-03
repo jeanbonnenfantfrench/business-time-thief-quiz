@@ -763,13 +763,14 @@ body::after {
 
 .result-footer {
     margin-top: var(--spacing-xxl);
-    padding-top: var(--spacing-xl);
+    padding: var(--spacing-xl) var(--spacing-lg);
     border-top: 4px solid var(--primary-purple);
     text-align: center;
-    background: linear-gradient(135deg, rgba(92, 33, 144, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
-    border-radius: 16px;
-    padding: var(--spacing-xl);
-    box-shadow: 0 4px 16px rgba(92, 33, 144, 0.1);
+    background: linear-gradient(135deg, rgba(92, 33, 144, 0.06) 0%, rgba(255, 255, 255, 1) 100%);
+    border-radius: 20px;
+    box-shadow: 
+        0 6px 24px rgba(92, 33, 144, 0.12),
+        inset 0 1px 0px rgba(255, 255, 255, 0.8);
     animation: fadeInUp 0.8s ease-out 1.6s backwards;
     position: relative;
     overflow: hidden;
@@ -801,17 +802,21 @@ body::after {
 }
 
 .result-footer-text {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--dark-grey);
     margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+    font-weight: 500;
 }
 
 .share-encouragement {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 700;
     color: var(--primary-purple);
     margin-bottom: var(--spacing-lg);
-    font-style: italic;
+    font-style: normal;
+    text-shadow: 1px 1px 2px rgba(92, 33, 144, 0.1);
+    letter-spacing: 0.5px;
 }
 
 .result-footer-buttons {
@@ -819,15 +824,17 @@ body::after {
     justify-content: center;
     gap: var(--spacing-md);
     flex-wrap: wrap;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
 }
 
 .share-buttons {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-md);
-    flex-wrap: wrap;
-    margin-top: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
     animation: shareButtonsPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.8s backwards;
 }
 
@@ -888,17 +895,19 @@ body::after {
 }
 
 .btn-secondary {
-    background-color: var(--light-grey);
+    background: linear-gradient(135deg, var(--light-grey) 0%, #e8e8e8 100%);
     color: var(--dark-grey);
     border: 2px solid var(--border-grey);
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .btn-secondary:hover {
-    background-color: var(--white);
+    background: linear-gradient(135deg, var(--white) 0%, var(--light-grey) 100%);
     border-color: var(--primary-purple);
     color: var(--primary-purple);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(92, 33, 144, 0.2);
 }
 
 .btn-secondary:active {
@@ -906,16 +915,33 @@ body::after {
 }
 
 .btn-share {
-    min-width: 200px;
-    font-size: 1.1rem;
-    font-weight: 700;
+    min-width: 220px;
+    font-size: 1rem;
+    font-weight: 600;
     padding: var(--spacing-md) var(--spacing-lg);
-    border-radius: 12px;
+    border-radius: 14px;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-transform: none;
+    letter-spacing: 0.3px;
+    font-family: var(--font-family);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.share-icon {
+    font-size: 1.3rem;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.btn-share:hover .share-icon {
+    transform: scale(1.2) rotate(5deg);
 }
 
 .btn-share::before {
@@ -939,46 +965,43 @@ body::after {
 .btn-linkedin {
     background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
     color: var(--white);
-    border: 3px solid #0077b5;
-    box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 119, 181, 0.35);
 }
 
 .btn-linkedin:hover {
-    background: linear-gradient(135deg, #005885 0%, #0077b5 100%);
-    border-color: #005885;
+    background: linear-gradient(135deg, #005885 0%, #004d6e 100%);
     color: var(--white);
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 119, 181, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 119, 181, 0.45);
 }
 
 .btn-email {
-    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    background: linear-gradient(135deg, #495057 0%, #343a40 100%);
     color: var(--white);
-    border: 3px solid #6c757d;
-    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+    border: none;
+    box-shadow: 0 4px 16px rgba(73, 80, 87, 0.35);
 }
 
 .btn-email:hover {
-    background: linear-gradient(135deg, #5a6268 0%, #6c757d 100%);
-    border-color: #5a6268;
+    background: linear-gradient(135deg, #343a40 0%, #212529 100%);
     color: var(--white);
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(73, 80, 87, 0.45);
 }
 
 .btn-teams {
     background: linear-gradient(135deg, #6264a7 0%, #4f5178 100%);
     color: var(--white);
-    border: 3px solid #6264a7;
-    box-shadow: 0 4px 12px rgba(98, 100, 167, 0.3);
+    border: none;
+    box-shadow: 0 4px 16px rgba(98, 100, 167, 0.35);
 }
 
 .btn-teams:hover {
-    background: linear-gradient(135deg, #4f5178 0%, #6264a7 100%);
-    border-color: #4f5178;
+    background: linear-gradient(135deg, #4f5178 0%, #3d3f5f 100%);
     color: var(--white);
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(98, 100, 167, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(98, 100, 167, 0.45);
 }
 
 /* Responsive Design */
@@ -1038,6 +1061,11 @@ body::after {
     
     .btn-share {
         min-width: 100%;
+        font-size: 0.95rem;
+    }
+    
+    .share-buttons {
+        grid-template-columns: 1fr;
     }
     
     .result-heading {
