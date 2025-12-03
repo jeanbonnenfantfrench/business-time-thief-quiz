@@ -374,38 +374,55 @@ function restartQuiz() {
     startQuiz();
 }
 
-function shareResults() {
+function getShareUrl() {
     const timeThiefKey = Object.keys(timeThieves).find(key => {
         const name = document.getElementById('result-character-name').textContent;
         return timeThieves[key].name === name;
     });
     
     if (timeThiefKey) {
-        const url = window.location.origin + window.location.pathname + '?result=' + timeThiefKey;
-        
-        if (navigator.share) {
-            navigator.share({
-                title: 'Which Business Time Thief Are You Fighting?',
-                text: `I'm fighting ${timeThieves[timeThiefKey].name}! Find out yours:`,
-                url: url
-            }).catch(err => {
-                console.log('Error sharing:', err);
-                copyToClipboard(url);
-            });
-        } else {
-            copyToClipboard(url);
-        }
+        return window.location.origin + window.location.pathname + '?result=' + timeThiefKey;
     }
+    return window.location.href;
 }
 
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Link copied to clipboard!');
-    }).catch(err => {
-        console.error('Failed to copy:', err);
-        // Fallback: show URL in prompt
-        prompt('Copy this link:', text);
+function shareOnLinkedIn() {
+    const url = getShareUrl();
+    const timeThiefKey = Object.keys(timeThieves).find(key => {
+        const name = document.getElementById('result-character-name').textContent;
+        return timeThieves[key].name === name;
     });
+    
+    const timeThief = timeThieves[timeThiefKey];
+    const shareText = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time: ${url}`);
+    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+    window.open(linkedInUrl, '_blank', 'width=600,height=400');
+}
+
+function shareViaEmail() {
+    const url = getShareUrl();
+    const timeThiefKey = Object.keys(timeThieves).find(key => {
+        const name = document.getElementById('result-character-name').textContent;
+        return timeThieves[key].name === name;
+    });
+    
+    const timeThief = timeThieves[timeThiefKey];
+    const subject = encodeURIComponent(`Which Business Time Thief Is Stealing Your Team's Time?`);
+    const body = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time:\n\n${url}\n\nShare with your colleagues and see what results they get!`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
+
+function shareOnTeams() {
+    const url = getShareUrl();
+    const timeThiefKey = Object.keys(timeThieves).find(key => {
+        const name = document.getElementById('result-character-name').textContent;
+        return timeThieves[key].name === name;
+    });
+    
+    const timeThief = timeThieves[timeThiefKey];
+    const shareText = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯 Take this 2-minute quiz to discover which business time thief is stealing your team's time: ${url}`);
+    const teamsUrl = `https://teams.microsoft.com/share?href=${encodeURIComponent(url)}&text=${shareText}`;
+    window.open(teamsUrl, '_blank', 'width=600,height=400');
 }
 
 // Check for result parameter in URL
@@ -440,7 +457,20 @@ document.addEventListener('DOMContentLoaded', () => {
         restartQuiz();
     });
     
-    // Share button
-    document.getElementById('share-btn').addEventListener('click', shareResults);
+    // Share buttons
+    document.getElementById('share-linkedin').addEventListener('click', (e) => {
+        e.preventDefault();
+        shareOnLinkedIn();
+    });
+    
+    document.getElementById('share-email').addEventListener('click', (e) => {
+        e.preventDefault();
+        shareViaEmail();
+    });
+    
+    document.getElementById('share-teams').addEventListener('click', (e) => {
+        e.preventDefault();
+        shareOnTeams();
+    });
 });
 
