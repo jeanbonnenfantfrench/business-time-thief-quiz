@@ -395,7 +395,7 @@ function shareOnLinkedIn() {
     
     const timeThief = timeThieves[timeThiefKey];
     const shareText = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time: ${url}`);
-    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${shareText}`;
     window.open(linkedInUrl, '_blank', 'width=600,height=400');
 }
 
@@ -409,7 +409,9 @@ function shareViaEmail() {
     const timeThief = timeThieves[timeThiefKey];
     const subject = encodeURIComponent(`Which Thief Is Stealing Your Team's Time?`);
     const body = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time:\n\n${url}\n\nShare with your colleagues and see what results they get!`);
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    // Try Outlook web first, fallback to mailto
+    const outlookUrl = `https://outlook.office.com/mail/deeplink/compose?subject=${subject}&body=${body}`;
+    window.open(outlookUrl, '_blank', 'width=800,height=600');
 }
 
 function shareOnTeams() {
@@ -421,8 +423,9 @@ function shareOnTeams() {
     
     const timeThief = timeThieves[timeThiefKey];
     const shareText = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯 Take this 2-minute quiz to discover which business time thief is stealing your team's time: ${url}`);
+    // Microsoft Teams share URL
     const teamsUrl = `https://teams.microsoft.com/share?href=${encodeURIComponent(url)}&text=${shareText}`;
-    window.open(teamsUrl, '_blank', 'width=600,height=400');
+    window.open(teamsUrl, '_blank', 'width=800,height=600');
 }
 
 // Check for result parameter in URL
