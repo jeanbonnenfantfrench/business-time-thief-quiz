@@ -407,7 +407,7 @@ function shareViaEmail() {
     });
     
     const timeThief = timeThieves[timeThiefKey];
-    const subject = encodeURIComponent(`Which Business Time Thief Is Stealing Your Team's Time?`);
+    const subject = encodeURIComponent(`Which Thief Is Stealing Your Team's Time?`);
     const body = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time:\n\n${url}\n\nShare with your colleagues and see what results they get!`);
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
 }
