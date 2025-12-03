@@ -224,36 +224,52 @@ function showQuestion(index) {
     // Update question text
     document.getElementById('question-text').textContent = question.question;
     
+    // Randomize answer order
+    const shuffledAnswers = [...question.answers];
+    for (let i = shuffledAnswers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledAnswers[i], shuffledAnswers[j]] = [shuffledAnswers[j], shuffledAnswers[i]];
+    }
+    
+    // Create a map to track original indices
+    const answerMap = new Map();
+    shuffledAnswers.forEach((shuffledAnswer, shuffledIndex) => {
+        const originalIndex = question.answers.indexOf(shuffledAnswer);
+        answerMap.set(shuffledIndex, originalIndex);
+    });
+    
     // Clear and populate answers
     const answersContainer = document.getElementById('answers-container');
     answersContainer.innerHTML = '';
     
-    question.answers.forEach((answer, answerIndex) => {
+    shuffledAnswers.forEach((answer, shuffledIndex) => {
         const answerCard = document.createElement('div');
         answerCard.className = 'answer-card';
         answerCard.setAttribute('role', 'button');
         answerCard.setAttribute('tabindex', '0');
         answerCard.setAttribute('aria-label', answer.text);
+        answerCard.setAttribute('data-original-index', answerMap.get(shuffledIndex));
         
         const radio = document.createElement('input');
         radio.type = 'radio';
         radio.name = 'answer';
-        radio.id = `answer-${answerIndex}`;
-        radio.value = answerIndex;
+        radio.id = `answer-${shuffledIndex}`;
+        radio.value = answerMap.get(shuffledIndex);
         
         const label = document.createElement('label');
-        label.htmlFor = `answer-${answerIndex}`;
+        label.htmlFor = `answer-${shuffledIndex}`;
         label.textContent = answer.text;
         
         answerCard.appendChild(radio);
         answerCard.appendChild(label);
         
-        // Add click handler
-        answerCard.addEventListener('click', () => selectAnswer(answerIndex));
+        // Add click handler - use original index for scoring
+        const originalIndex = answerMap.get(shuffledIndex);
+        answerCard.addEventListener('click', () => selectAnswer(originalIndex, shuffledIndex));
         answerCard.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                selectAnswer(answerIndex);
+                selectAnswer(originalIndex, shuffledIndex);
             }
         });
         
@@ -266,17 +282,19 @@ function showQuestion(index) {
     
     // Restore previous selection if exists
     if (selectedAnswers[index] !== undefined) {
-        const prevAnswer = selectedAnswers[index];
-        const prevCard = answersContainer.children[prevAnswer];
-        if (prevCard) {
-            prevCard.querySelector('input').checked = true;
-            prevCard.classList.add('selected');
-            nextBtn.disabled = false;
-        }
+        const prevOriginalIndex = selectedAnswers[index];
+        // Find the card with matching original index
+        Array.from(answersContainer.children).forEach(card => {
+            if (parseInt(card.getAttribute('data-original-index')) === prevOriginalIndex) {
+                card.querySelector('input').checked = true;
+                card.classList.add('selected');
+                nextBtn.disabled = false;
+            }
+        });
     }
 }
 
-function selectAnswer(answerIndex) {
+function selectAnswer(originalIndex, shuffledIndex) {
     // Remove previous selection
     const answersContainer = document.getElementById('answers-container');
     Array.from(answersContainer.children).forEach(card => {
@@ -284,20 +302,20 @@ function selectAnswer(answerIndex) {
         card.querySelector('input').checked = false;
     });
     
-    // Select new answer
-    const selectedCard = answersContainer.children[answerIndex];
+    // Select new answer using shuffled index for display
+    const selectedCard = answersContainer.children[shuffledIndex];
     selectedCard.classList.add('selected');
     selectedCard.querySelector('input').checked = true;
     
-    // Store selection
-    selectedAnswers[currentQuestion] = answerIndex;
+    // Store selection using original index
+    selectedAnswers[currentQuestion] = originalIndex;
     
     // Enable next button
     document.getElementById('next-btn').disabled = false;
     
-    // Apply scores
+    // Apply scores using original index
     const question = quizData.questions[currentQuestion];
-    const answer = question.answers[answerIndex];
+    const answer = question.answers[originalIndex];
     
     Object.keys(answer.scores).forEach(thief => {
         scores[thief] += answer.scores[thief];
