@@ -1,0 +1,22 @@
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temp files
+*.tmp
+*.log
+*.cache
+
+# Optional: Keep images directory but ignore if you want to track placeholder files
+# Uncomment if you want to ignore placeholder files
+# images/.gitkeep
+

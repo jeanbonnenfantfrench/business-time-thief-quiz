@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Which Business Time Thief Are You Fighting? | Lleverage</title>
+    <meta name="description" content="Discover which manual process is stealing the most time from your team. Take our 2-minute quiz.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <div id="quiz-container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="start-content">
+                <div class="hero-image-container">
+                    <div class="character-lineup">
+                        <div class="character-preview" data-character="repetitus">
+                            <img src='images/1- The Customer Question Loop - "Repetitus the Messenger".png' alt="Repetitus the Messenger" class="character-preview-img">
+                        </div>
+                        <div class="character-preview" data-character="manualis">
+                            <img src='images/2-The Order Entry Pile - "Manualis the Scribe".png' alt="Manualis the Scribe" class="character-preview-img">
+                        </div>
+                        <div class="character-preview" data-character="duplicatus">
+                            <img src='images/3-The Copy-Paste Marathon - "Duplicatus the Clerk".png' alt="Duplicatus the Clerk" class="character-preview-img">
+                        </div>
+                        <div class="character-preview" data-character="confusus">
+                            <img src='images/4-The Production Puzzle - "Confusus the Planner".png' alt="Confusus the Planner" class="character-preview-img">
+                        </div>
+                        <div class="character-preview" data-character="calculatus">
+                            <img src='images/5-The Quote Bottleneck - "Calculatus the Merchant".png' alt="Calculatus the Merchant" class="character-preview-img">
+                        </div>
+                        <div class="character-preview" data-character="validatus">
+                            <img src='images/6-The Invoice Processing Trap - "Validatus the Auditor".png' alt="Validatus the Auditor" class="character-preview-img">
+                        </div>
+                    </div>
+                </div>
+                <h1 class="hero-title">Which Business Time Thief Are You Fighting?</h1>
+                <p class="hero-subtitle">Discover which manual process is stealing the most time from your team - and how to stop it.</p>
+                <button id="start-quiz-btn" class="btn btn-primary">START QUIZ</button>
+                <p class="quiz-info">8 quick questions • Takes 2 minutes</p>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-content">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text" id="progress-text">Question 1 of 8</p>
+                </div>
+                
+                <div class="question-container">
+                    <h2 id="question-text" class="question-text"></h2>
+                    <div id="answers-container" class="answers-container"></div>
+                </div>
+
+                <div class="quiz-navigation">
+                    <button id="next-btn" class="btn btn-primary" disabled>Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="screen">
+            <div class="results-content">
+                <div class="character-card">
+                    <img id="result-character-image" src="" alt="" class="character-image">
+                    <h2 id="result-character-name" class="character-name"></h2>
+                    <p id="result-character-tagline" class="character-tagline"></p>
+                </div>
+
+                <div class="result-section">
+                    <h3 class="result-heading">Your biggest time thief: <span id="result-problem-name"></span></h3>
+                    <p id="result-pain-point" class="result-text"></p>
+                </div>
+
+                <div class="result-section">
+                    <h3 class="result-heading">Time Recovered:</h3>
+                    <ul id="result-stats" class="result-stats"></ul>
+                </div>
+
+                <div class="result-section">
+                    <h3 class="result-heading">How to stop this time thief: <span id="result-solution-name"></span></h3>
+                    <p id="result-solution-description" class="result-text"></p>
+                </div>
+
+                <div class="result-ctas">
+                    <a id="demo-cta" href="https://www.lleverage.ai/book-a-demo" class="btn btn-primary" target="_blank">Get Your Battle Plan</a>
+                    <a id="solution-cta" href="" class="btn btn-secondary" target="_blank">Learn More About This Solution</a>
+                </div>
+
+                <div class="result-footer">
+                    <p class="result-footer-text">Want to see which other time thieves are affecting your business?</p>
+                    <div class="result-footer-buttons">
+                        <button id="retake-btn" class="btn btn-secondary">Retake Quiz</button>
+                        <button id="share-btn" class="btn btn-secondary">Share Results</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+</html>
+
