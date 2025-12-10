@@ -412,9 +412,20 @@ function shareOnLinkedIn() {
     });
     
     const timeThief = timeThieves[timeThiefKey];
-    const shareText = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time: ${url}`);
-    const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}&summary=${shareText}`;
-    window.open(linkedInUrl, '_blank', 'width=600,height=400');
+    // LinkedIn doesn't support pre-filled text for security reasons, but we can suggest text
+    // The share dialog will open with the URL, user can add the suggested text manually
+    const shareText = `I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time: ${url}`;
+    
+    // Copy suggested text to clipboard for easy pasting
+    navigator.clipboard.writeText(shareText).then(() => {
+        // Open LinkedIn share dialog
+        const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        window.open(linkedInUrl, '_blank', 'width=600,height=400');
+    }).catch(() => {
+        // If clipboard fails, just open LinkedIn
+        const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        window.open(linkedInUrl, '_blank', 'width=600,height=400');
+    });
 }
 
 function shareViaEmail() {
@@ -425,10 +436,13 @@ function shareViaEmail() {
     });
     
     const timeThief = timeThieves[timeThiefKey];
-    const subject = encodeURIComponent(`Which Thief Is Stealing Your Team's Time?`);
-    const body = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time:\n\n${url}\n\nShare with your colleagues and see what results they get!`);
-    // Try Outlook web first, fallback to mailto
-    const outlookUrl = `https://outlook.office.com/mail/deeplink/compose?subject=${subject}&body=${body}`;
+    const subject = `Which Thief Is Stealing Your Team's Time?`;
+    const body = `I'm fighting ${timeThief.name}! 🎯\n\nTake this 2-minute quiz to discover which business time thief is stealing your team's time:\n\n${url}\n\nShare with your colleagues and see what results they get!`;
+    
+    // Outlook web compose URL with pre-filled subject and body
+    const outlookUrl = `https://outlook.office.com/mail/deeplink/compose?to=&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Try opening Outlook web
     window.open(outlookUrl, '_blank', 'width=800,height=600');
 }
 
@@ -440,9 +454,10 @@ function shareOnTeams() {
     });
     
     const timeThief = timeThieves[timeThiefKey];
-    const shareText = encodeURIComponent(`I'm fighting ${timeThief.name}! 🎯 Take this 2-minute quiz to discover which business time thief is stealing your team's time: ${url}`);
-    // Microsoft Teams share URL
-    const teamsUrl = `https://teams.microsoft.com/share?href=${encodeURIComponent(url)}&text=${shareText}`;
+    const shareText = `I'm fighting ${timeThief.name}! 🎯 Take this 2-minute quiz to discover which business time thief is stealing your team's time: ${url}`;
+    
+    // Microsoft Teams share URL - format: teams.microsoft.com/share?href=URL&text=TEXT
+    const teamsUrl = `https://teams.microsoft.com/share?href=${encodeURIComponent(url)}&text=${encodeURIComponent(shareText)}`;
     window.open(teamsUrl, '_blank', 'width=800,height=600');
 }
 
